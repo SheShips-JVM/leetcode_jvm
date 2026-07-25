@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class reggyTwoSum {
+public class TwoSumReggySolution {
     public static void main(String[] args) {
         int[] nums = {2, 7, 11, 15};
         int target = 9;
@@ -14,7 +14,7 @@ public class reggyTwoSum {
         }
     }
     public static int[] twoSumIndexes(int[] array, int target) {
-        HashMap<Integer, Integer> map = new HashMap<>(); // value -> index map
+        HashMap<Integer, Integer> map = new HashMap<>(); // value -> index  map
         for (int i = 0; i < array.length; i++) {
             int complement = target - array[i];
             if (map.containsKey(complement)) {
