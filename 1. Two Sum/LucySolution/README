@@ -1,0 +1,36 @@
+Two Sum
+What the problem is asking
+
+Given an array of numbers and a target, find the two numbers in the array that add up to target, and return their indices (not the values themselves).
+
+Example:
+
+nums = [2, 7, 11, 15], target = 9
+2 + 7 = 9 → return [0, 1]   (the indices of 2 and 7)
+
+Each input has exactly one solution, and you can't use the same element twice.
+
+How I thought about it
+
+The naive way is to check every pair of numbers (two nested loops) — for each number, look through the rest of the array to see if any other number adds up to target. That works, but it's slow for big arrays since you're re-scanning the array over and over.
+
+A faster way: as I walk through the array once, keep track of every number I've already seen (and its index) in a HashMap. For each new number, I can instantly check: "have I already seen the number that would complete this pair?" If yes — I've found my answer immediately. If no — I remember this number in case a later number needs it.
+
+This trades a bit of memory (the map) for a lot of speed (one pass instead of nested loops).
+
+My steps
+Create an empty HashMap (num_map) to remember numbers I've already seen, mapping number -> index.
+Loop through the array once, index by index.
+For each number, calculate its "complement" — the number that would complete the pair:
+   complement = target - nums[i]
+Check if that complement is already in the map.
+If yes → I've found the pair. Return [index of complement, current index].
+If no → this number isn't part of a completed pair yet, so store it in the map (nums[i] -> i) in case a future number needs it as a complement.
+If the loop finishes with no match found, throw an exception — the problem guarantees a solution exists, so reaching the end with nothing means something's wrong with the input.
+Complexity
+
+Time: O(n) I only loop through the array once. Inside the loop, checking (containsKey), reading (get), and writing (put) to a HashMap are all O(1) on average, thanks to hashing. So total time grows linearly with the size of the input — one map operation per element, no nested loops.
+
+Space: O(n) In the worst case, I store almost every number in the map before finding a match (or if there's genuinely no match at all), so memory use also grows linearly with input size.
+
+Compared to the brute-force approach (checking every pair with two nested loops), which is O(n²) time but O(1) space — this solution trades some extra memory for a big speed win, especially on large arrays.
